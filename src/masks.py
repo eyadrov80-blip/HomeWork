@@ -27,35 +27,3 @@ def get_mask_account(account_input: str) -> str:
     возвращает = '**4305'
     '''
     return '**' + account_input[-4:]
-
-
-def validate_and_normalize_pan(pan_input: object, check_length_pan: bool = True) -> Tuple[bool, str]:
-    """
-    Если второй аргумент TRUE или не указан проверяет, что входной аргумент содержит ровно 16 цифр.
-    Разрешены только цифры, пробелы и тире.
-    Возвращает:
-        (True, "1234567890123456") — если валидно и нормализовано.
-        (False, "") — если невалидно.
-    """
-    # Проверим что pan_input является строкой
-    if not isinstance(pan_input, str):
-        return False, ""
-    # Оставляем только цифры, пробелы и тире; остальные символы делают ввод невалидным
-    # Создадим "Белый список" в виде множества
-    allowed_chars = set("0123456789 -")
-    # Пробежимся по pan_input и сравним с "Белым списком"
-    if any(ch not in allowed_chars for ch in pan_input):
-        return False, ""
-    # Создадим новую строку без разделителей
-    digits_only = pan_input.replace(" ", "").replace("-", "")
-    # Проверим количество символов в итоговой строке
-    if len(digits_only) != 16 and check_length_pan:
-        return False, ""
-    elif len(digits_only) < 4:
-        return False, ""
-
-    # Проверим что строка состоит из цифр
-    if not digits_only.isdigit():
-        return False, ""
-    # Все проверки пройдены, возвращаем TRUE и "Чистые" данные
-    return True, digits_only
