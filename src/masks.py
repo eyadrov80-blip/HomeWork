@@ -17,7 +17,7 @@ def get_mask_card_number(pan_input: str) -> str:
     return pan_input[0:4] + ' ' + pan_input[4:6] + '** ****' + pan_input[-4:]
 
 
-def get_mask_account(pan_input: object) -> str:
+def get_mask_account(account_input: str) -> str:
     '''
     Функция принимает на вход номер счета и возвращает его маску.
     Номер счета замаскирован и отображается в формате **XXXX, где X — это цифра номера.
@@ -26,11 +26,7 @@ def get_mask_account(pan_input: object) -> str:
     входной аргумент = '73654108430135874305'
     возвращает = '**4305'
     '''
-    is_valid_pan, normalized_pan = validate_and_normalize_pan(pan_input, False)
-    if is_valid_pan:
-        return '**' + normalized_pan[-4:]
-    else:
-        return 'error_card_number'
+    return '**' + account_input[-4:]
 
 
 def validate_and_normalize_pan(pan_input: object, check_length_pan: bool = True) -> Tuple[bool, str]:
