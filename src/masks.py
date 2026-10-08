@@ -1,7 +1,7 @@
 from typing import Tuple
 
 
-def get_mask_card_number(pan_input: object) -> str:
+def get_mask_card_number(pan_input: str) -> str:
     '''
     Функция принимает на вход номер карты и возвращает ее маску.
     Номер карты замаскирован и отображается в формате XXXX XX** **** XXXX,
@@ -14,11 +14,7 @@ def get_mask_card_number(pan_input: object) -> str:
     Примечание:
     pan_input - PAN = Primary Account Number (номер карты)
     '''
-    is_valid_pan, normalized_pan = validate_and_normalize_pan(pan_input)
-    if is_valid_pan:
-        return normalized_pan[0:4] + ' ' + normalized_pan[4:6] + '** ****' + normalized_pan[-4:]
-    else:
-        return 'error_card_number'
+    return pan_input[0:4] + ' ' + pan_input[4:6] + '** ****' + pan_input[-4:]
 
 
 def get_mask_account(pan_input: object) -> str:
