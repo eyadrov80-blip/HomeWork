@@ -20,3 +20,4 @@ def widget_test() -> None:
 
 
 widget_test()
+print(f"widget.get_date('2024-03-11T02:26:18.671407') => {widget.get_date('2024-03-11T02:26:18.671407')}")

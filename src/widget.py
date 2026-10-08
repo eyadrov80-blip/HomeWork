@@ -1,5 +1,6 @@
 import re
 from typing import List, Tuple
+from datetime import datetime
 
 from src import masks
 
@@ -57,3 +58,12 @@ def validate_account_card(account_card: str) -> bool:
     if not account_card:  # Проверим что account_card не пустая строка
         return False
     return True
+
+
+def get_date(iso_string: str) -> str:
+    '''
+    :param iso_string: "ГГГГ-ММ-ДД Т ЧЧ:ММ:СС.СССССС" (Пример: "2024-03-11T02:26:18.671407")
+    :return:    "ДД.ММ.ГГГГ" (Пример: "11.03.2024")
+    '''
+    return datetime.fromisoformat(iso_string).strftime("%d.%m.%Y")
+
