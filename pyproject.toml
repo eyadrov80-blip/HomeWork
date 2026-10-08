@@ -1,0 +1,110 @@
+[tool.poetry]
+name = "homework"
+version = "0.1.0"
+description = ""
+authors = ["Evgeny Yadrov <...>"]
+readme = "README.md"
+packages = [{ include = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.14"
+
+[[tool.poetry.source]]
+name = "mirror"
+url = "https://pypi-mirror.gitverse.ru/simple/"
+priority = "primary"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+lint = [
+    "flake8 (>=7.4.1,<8.0.0)",
+    "mypy (>=2.4.0,<3.0.0)",
+    "black (>=26.5.1,<27.0.0)",
+    "isort (>=9.0.1,<10.0.0)"
+]
+
+[tool.poetry.scripts]
+homework = "src.main:masks_test"
+
+[tool.mypy]
+# Совместимость с целевой версией Python
+python_version = "3.14"
+# Максимальная строгость: включает почти всё нижеперечисленное сразу
+strict = true
+# Проверять все файлы, включая те, где нет ни одной аннотации
+check_untyped_defs = true
+# Ошибки при отсутствии аннотаций (strict уже включает, продублировано для явности)
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+# None по умолчанию запрещён: без явного Optional аргумент не примет None
+no_implicit_optional = true
+# Предупреждать о местах, где тип не сужается: if obj: не гарантирует, что obj — не список
+warn_redundant_casts = true
+warn_unused_ignores = true          #[type: ignore] без причины — ошибка
+warn_return_any = true              # функция с типом -> int вернула Any — предупреждение
+warn_unreachable = true             # недостижимый код (после return, в else после return)
+# Запрет «тихих» дыр в типах
+disallow_any_generics = true        # list вместо list[int] — ошибка
+disallow_subclassing_any = true     # наследоваться от класса с Any-типами нельзя
+no_implicit_reexport = true         # из модуля экспортируется только импортированное явно
+# Вывод ошибок
+show_error_codes = true
+show_column_numbers = true
+pretty = true                       # человекочитаемый вывод с подсказками
+color_output = true
+error_summary = true
+# Кэш: ускоряет повторные прогоны
+cache_dir = ".mypy_cache"
+
+[tool.black]
+# Целевые версии Python: влияет на синтаксис (треугольные скобки для typing и т.п.)
+target-version = ["py314"]
+# Та же длина строки, что в flake8
+line-length = 119
+# false — Black приводит всё к двойным кавычками (по умолчанию false — меняет).
+# true - не трогает кавычки
+skip-string-normalization = true
+# Магическая запятая: запятая после последнего элемента в многострочной
+# коллекции сохраняется, и Black НЕ схлопывает её в одну строку.
+# Оставляем включённой (по умолчанию) — это осмысленный инструмент контроля раскладки
+skip-magic-trailing-comma = false
+# Исключения (regex), дополняющие дефолтные (.venv, __pycache__ и т.д.)
+extend-exclude = '''
+(
+    node_modules/
+    | migrations/
+    | notes/
+)
+'''
+# Важно для CI и Docker: форматировать только то, что в проекте,
+# а не подтянутые по пути файлы
+force-exclude = true
+
+[tool.isort]
+# Главная настройка: профиль Black.
+# Он сам выставляет multi_line_output, include_trailing_comma,
+# use_parentheses и согласованную с Black раскладку скобок.
+profile = "black"
+# Длина строки — та же, что в [tool.black] и [flake8]
+line_length = 119
+# Группировка: стандартная библиотека / сторонние пакеты / свой код
+known_first_party = ["homework"]        # ← имя твоего пакета/проекта
+known_local_folder = ["notes"]
+# Пропускаем (Для примера формата)
+#   .git, __pycache__, .venv, venv, build, dist, .eggs,
+#   node_modules входят в дефолтный список, нет необходимости их прописывать)
+#   Также любая папка и файл, начинающиеся с точки, пропускаются автоматически.
+extend_skip = ["migrations", "draft"]
+# Сортировка внутри групп: по алфавиту
+force_sort_within_sections = true
+# Комбинировать импорты из одного модуля (from x import a; from x import b → одно)
+combine_as_imports = true
+combine_star = true                     # решает конфликт * и обычных импортов
+# Не переносить импорт, если он влезает в строку целиком
+force_grid_wrap = 0
+# Пустая строка после блока импортов — отделить его от кода
+lines_after_imports = 2

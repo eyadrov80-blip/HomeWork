@@ -1,0 +1,52 @@
+[flake8]
+# Длина строки 79 — канонический PEP 8 (настоящий строгий вариант, не 88 под Black)
+max-line-length = 119
+
+# Отступы: только пробелы, табуляция запрещена
+indent-string = "    "
+indent-size = 4
+
+# Что проверяем
+# (Весь список всё, что умеет ядро + плагины: E,W,F,C90,N,B,SIM,C4,RET,D,J,S)
+select = E,
+         W,
+         F,
+         C90,
+         N,
+         B,
+         SIM,
+         C4,
+         RET,
+         D,
+         J,
+         S
+
+# Игнорируем только взаимоисключающие ошибки
+ignore =
+    D203,
+    D213,
+    S104,
+    S101
+
+# Исключения
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    build,
+    dist,
+    .eggs,
+    node_modules
+    migrations,
+    notes
+
+# Цикломатическая сложность функции (Количество ветвлений в функции) — не выше 7
+max-complexity = 7
+
+# Docstring обязательны везде
+docstring-convention = pep257
+
+# в __init__.py разрешаем неиспользуемые импорты (ре-экспорт)
+per-file-ignores =
+    __init__.py: F401
