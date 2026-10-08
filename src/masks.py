@@ -1,6 +1,3 @@
-from typing import Tuple
-
-
 def get_mask_card_number(pan_input: str) -> str:
     '''
     Функция принимает на вход номер карты и возвращает ее маску.

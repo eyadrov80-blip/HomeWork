@@ -27,7 +27,7 @@ lint = [
 ]
 
 [tool.poetry.scripts]
-homework = "src.main:masks_test"
+homework = "src.main:widget_test"
 
 [tool.mypy]
 # Совместимость с целевой версией Python
