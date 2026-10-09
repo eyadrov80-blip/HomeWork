@@ -4,7 +4,6 @@ from typing import List, Tuple
 
 from src import masks
 
-
 # Компилируем один раз — удобно и чуть быстрее при частых вызовах
 # «Счет/Счёт» + хотя бы один пробел
 ACCOUNT_PATTERN = re.compile(r"Сч[её]т\s+(\d{20})", re.IGNORECASE)
