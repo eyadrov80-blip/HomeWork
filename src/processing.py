@@ -1,8 +1,9 @@
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 
 def filter_by_state(input_list_dict: List[Dict[str, Any]], state: Optional[str] = "EXECUTED") -> List[Dict[str, Any]]:
-    """
+    '''
     Возвращает новый список словарей, отфильтрованный по значению ключа 'state'.
 
     Если state=None, возвращаются все записи (без фильтрации по этому ключу).
@@ -12,7 +13,7 @@ def filter_by_state(input_list_dict: List[Dict[str, Any]], state: Optional[str] 
     :param records: список словарей с данными
     :param state: значение для фильтрации по ключу 'state'; по умолчанию 'EXECUTED'
     :return: новый список отфильтрованных словарей
-    """
+    '''
     if state is None:
         # Если состояние не задано — возвращаем копию списка
         return list(input_list_dict)
@@ -22,7 +23,11 @@ def filter_by_state(input_list_dict: List[Dict[str, Any]], state: Optional[str] 
 
 def sort_by_date(input_list_dict: List[Dict[str, Any]], sort_order: bool = True) -> List[Dict[str, Any]]:
     '''
+    Сортирует список словарей по полю 'date'.
 
-    :return:
+    :param input_list_dict: Список словарей, в каждом ожидается ключ 'date', ISO-строкой.
+    :param sort_order: Если True — сортировка по убыванию (от новых к старым),
+                       если False — по возрастанию. По умолчанию True.
+    :return: Новый отсортированный список.
     '''
-    return list(input_list_dict)
+    return sorted(input_list_dict, key=lambda item: datetime.fromisoformat(item["date"]), reverse=sort_order)
