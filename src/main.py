@@ -21,6 +21,7 @@ test_list_processing = [
 
 
 def widget_test() -> None:
+    ''' Тест widget.py '''
     print('Test widget.py')
     for i in test_list_widget:
         print(f'if input = {i}; mask_account_card -> {widget.mask_account_card(i)}')
@@ -28,6 +29,7 @@ def widget_test() -> None:
 
 
 def processing_test() -> None:
+    ''' Тест processing.py '''
     heading = 'filter_by_state(input_list_dict'
     print('Test processing.py')
     print(f'{heading}) -> {processing.filter_by_state(test_list_processing)}')
