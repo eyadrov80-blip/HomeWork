@@ -23,8 +23,8 @@ test_list_processing = [
 def widget_test() -> None:
     ''' Тест widget.py '''
     print('Test widget.py')
-    for i in test_list_widget:
-        print(f'if input = {i}; mask_account_card -> {widget.mask_account_card(i)}')
+    for account_card_input in test_list_widget:
+        print(f'if input = {account_card_input}; mask_account_card -> {widget.mask_account_card(account_card_input)}')
     print(f"widget.get_date('2024-03-11T02:26:18.671407') => {widget.get_date('2024-03-11T02:26:18.671407')}")
 
 
