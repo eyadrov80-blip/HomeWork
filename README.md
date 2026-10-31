@@ -1,22 +1,15 @@
-@'
-# HomeWork_9_2
+# Домашние задания к модулю "Разработка на Python"
+## Урок 9.1 Poetry. Оформление кода
 
-Домашняя работа "9.2 Основы Git"
+Создан проект с помощью Poetry. В проекте созданы основные пакеты: src — для исходного кода, tests — для тестов.
 
-Добавлен модуль widget.py с функцией mask_account_card(str)
+Установлены инструменты для проверки качества кода (Flake8, black, isort, mypy) в группу lint *через pip + poetry*.
 
-Модуль main.py совершает вызов функцию mask_account_card(str) с аргументами из списка.  
+Настроен файл .flake8 для конфигурации линтера Flake8. Добавлены конфигурации для black, isort и mypy в файл pyproject.toml.
 
-Функция mask_account_card(str) различает входящие строки с использованием библиотеки RE и возвращает строку-маску в соответствии с видом входящих данных.
+В пакете src создан модуль masks.py со следующими функциями:
 
-В модуль widget.py добавлена функция get_date("ГГГГ-ММ-ДД Т ЧЧ:ММ:СС.СССССС": str) -> "ДД.ММ.ГГГГ": str
-
-В модуле masks.py изменено:
-
-Функции принимают только строки, валидация и нормализация убраны.
-
-
-get_mask_card_number(pan_input: str) -> str
+#### get_mask_card_number(pan_input: str) -> str
 
     Функция принимает на вход номер карты и возвращает ее маску.
     Номер карты замаскирован и отображается в формате XXXX XX** **** XXXX,
@@ -29,7 +22,7 @@ get_mask_card_number(pan_input: str) -> str
     Примечание:
     pan_input - PAN = Primary Account Number (номер карты)
 
-get_mask_account(account_input: str) -> str
+#### get_mask_account(account_input: str) -> str
 
     Функция принимает на вход номер счета и возвращает его маску.
     Номер счета замаскирован и отображается в формате **XXXX, где X — это цифра номера.
@@ -38,43 +31,76 @@ get_mask_account(account_input: str) -> str
     входной аргумент = '73654108430135874305'
     возвращает = '**4305'
 
+Стиль кода проверен линтером Flake8
+
+Для форматирования кода использованы black и isort
+
+Статический анализ типов сделан с помощью mypy, ошибки типизации в коде отсутствуют.
+
+## Урок 9.2 Основы Git
+
+Создан локальный Git-репозиторий в папке проекта.
+
+Создан файл .gitignore в корне проекта. Использован [шаблон для Python](https://github.com/github/gitignore/blob/main/Python.gitignore), раскомментировал .idea
+
+В процессе разработки кода производились commit, фиксируя основные этапы создания кода.
+
+В пакете src добавлен новый модуль widget.py со следующими функциями:
+
+#### mask_account_card(account_card: str) -> str:
+
+    Функция принимает строку, содержащую тип и номер карты или счета.
+    Аргументом может быть строка типа Visa Platinum 7000792289606361, или
+    Maestro 7000792289606361, или Счет 73654108430135874305.
+    Разделять строку на 2 аргумента (отдельно имя, отдельно номер) нельзя!
+    Возвращать строку с замаскированным номером. Для карт и счетов используйте разные типы маскировки.
+ПРИМЕЧАНИЕ: Функция mask_account_card использует регулярные выражения. Отдельно объявлены константы ACCOUNT_PATTERN и CARD_PATTERNS
+
+#### validate_account_card(account_card: str) -> bool:
+
+    Функция валидности.
+    Проверяет: На входе строка, строка не пустая.
+    Возвращает: True — если валидно и False — если невалидно.
+
+#### get_date(iso_string: str) -> str:
+
+    :param iso_string: "ГГГГ-ММ-ДД Т ЧЧ:ММ:СС.СССССС" (Пример: "2024-03-11T02:26:18.671407")
+    :return:    "ДД.ММ.ГГГГ" (Пример: "11.03.2024")
+
+## Урок 10.1 Продвинутый Git
+
+Созданы ветки в локальном репозитории для работы по GitFlow.
+
+Создан репозиторий на GitHub.
+
+Содержимое локального репозитория залито в репозиторий на GitHub.
+
+В пакете src добавлен новый модуль processing.py со следующими функциями:
+#### filter_by_state(input_list_dict: List[Dict[str, Any]], state: str = "EXECUTED") -> List[Dict[str, Any]]:
+
+    Возвращает новый список словарей, отфильтрованный по значению ключа 'state'.
+    :param input_list_dict: список словарей с данными
+    :param state: значение для фильтрации по ключу 'state'; по умолчанию 'EXECUTED'
+    :return: новый список отфильтрованных словарей
+
+#### sort_by_date(input_list_dict: List[Dict[str, Any]], sort_order: bool = True) -> List[Dict[str, Any]]:
+ 
+    Сортирует список словарей по полю 'date'.
+    :param input_list_dict: Список словарей, в каждом ожидается ключ 'date', ISO-строкой.
+    :param sort_order: Если True — сортировка по убыванию (от новых к старым),
+                       если False — по возрастанию. По умолчанию True.
+    :return: Новый отсортированный список.
 
 ## Статус
 В разработке.
 
 ## Зависимости
-Установлены НЕ через Poetry.
 
-СЛОЖНОСТИ:
-
-1. DNS работает, соединение открывается, но ответа от сервера нет — «Read timed out». Это значит, что пакеты не доходят до тебя с CDN PyPI (он работает на Fastly, и из российских сетей соединения с ним часто обрываются по таймауту — это известная ситуация, а не проблема твоего Poetry). В июне такое уже случалось: PyPI временно «отваливался», потом доступ восстанавливался, но стабильность зависит от провайдера. 
-skillbox.ru +1
-
-РЕШЕНИЕ: Переключиться на зеркало пакетов. Добавь зеркало как основной источник — Poetry сам пропишет его в pyproject.toml: >_ poetry source add --priority=primary mirror https://mirror.yandex.ru/pypi/simple/
-
-Если зеркало Яндекса тупит (его иногда ругают за медленную синхронизацию), попробуй вместо него:
-https://pypi-mirror.gitverse.ru/simple/
-или китайские (они обычно быстрые, но чуть отстают по свежим версиям):
-https://pypi.tuna.tsinghua.edu.cn/simple
-https://mirrors.aliyun.com/pypi/simple
-
-Чтобы убрать зеркало и вернуться на PyPI: >_ poetry source remove mirror
-
-FLAKE8 поставил через POETRY с зеркала
-
-2. MYPY, BLACK и ISORT встали только через PIP
->pip install --retries 20 --timeout 120 mypy -i https://pypi-mirror.gitverse.ru/simple/
-
->poetry add --group lint mypy
-
->pip install --retries 20 --timeout 120 black -i https://pypi-mirror.gitverse.ru/simple/
-
->poetry add --group lint black 
-
-> pip install --retries 20 --timeout 120 isort -i https://pypi-mirror.gitverse.ru/simple/
-
-> poetry add --group lint isort
 
 ## Как запустить
 ```bashn
+git clone git@github.com:eyadrov80-blip/HomeWork.git
+```
+```bashn
 poetry run python -m src.main
+```

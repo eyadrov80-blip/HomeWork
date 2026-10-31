@@ -1,6 +1,6 @@
+from datetime import datetime
 import re
 from typing import List, Tuple
-from datetime import datetime
 
 from src import masks
 
@@ -66,4 +66,3 @@ def get_date(iso_string: str) -> str:
     :return:    "ДД.ММ.ГГГГ" (Пример: "11.03.2024")
     '''
     return datetime.fromisoformat(iso_string).strftime("%d.%m.%Y")
-
