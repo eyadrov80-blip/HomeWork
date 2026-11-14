@@ -10,4 +10,8 @@ def test_get_mask_card_number():
 
 
 def test_get_mask_account():
-    pass
+    assert get_mask_account('12345678901234567890') == '**7890'
+    assert get_mask_account('') == '**'
+    assert get_mask_account('1234567890') == '**7890'
+    assert get_mask_account('123456789012345678901234') == '**1234'
+    assert get_mask_account('1234567890qwertyuiop') == '**uiop'
