@@ -45,7 +45,7 @@ disallow_untyped_defs = true
 disallow_incomplete_defs = true
 disallow_untyped_decorators = true
 # Не проверяем папку с тестами
-exclude = ["tests/", "tests/**"]
+exclude = ["tests/"]
 # None по умолчанию запрещён: без явного Optional аргумент не примет None
 no_implicit_optional = true
 # Предупреждать о местах, где тип не сужается: if obj: не гарантирует, что obj — не список
