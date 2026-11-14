@@ -1,0 +1,13 @@
+from src.masks import get_mask_card_number, get_mask_account
+
+
+def test_get_mask_card_number():
+    assert get_mask_card_number('1234546890123456') == '1234 54** **** 3456'
+    assert get_mask_card_number('') == ' ** **** '
+    assert get_mask_card_number('123454689012') == '1234 54** **** 9012'
+    assert get_mask_card_number('12345468901234567890') == '1234 54** **** 7890'
+    assert get_mask_card_number('qwerqwerqwerqwer') == 'qwer qw** **** qwer'
+
+
+def test_get_mask_account():
+    pass
