@@ -34,8 +34,8 @@ def mask_account_card(account_card: str) -> str:
     match = ACCOUNT_PATTERN.fullmatch(account_card.strip())
     if match:
         if len(match.group(1)) >= 4:
-            return f"Счет {masks.get_mask_account(match.group(1))}"
-        else:
+            return f"Счёт {masks.get_mask_account(match.group(1))}"
+    #    else:
             return 'Ошибка ввода данных'
 
     line = account_card.strip()
@@ -43,7 +43,7 @@ def mask_account_card(account_card: str) -> str:
         match = pattern.fullmatch(line)
         if match:
             return f"{name} {masks.get_mask_card_number(match.group(1))}"
-    return 'Данные не распознаны'
+    return 'Ошибка ввода данных'
 
 
 def validate_account_card(account_card: str) -> bool:
