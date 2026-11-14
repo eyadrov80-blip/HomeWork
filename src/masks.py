@@ -11,7 +11,7 @@ def get_mask_card_number(pan_input: str) -> str:
     Примечание:
     pan_input - PAN = Primary Account Number (номер карты)
     '''
-    return pan_input[0:4] + ' ' + pan_input[4:6] + '** ****' + pan_input[-4:]
+    return pan_input[0:4] + ' ' + pan_input[4:6] + '** **** ' + pan_input[-4:]
 
 
 def get_mask_account(account_input: str) -> str:
