@@ -1,7 +1,6 @@
 from datetime import datetime
 from typing import Any, Dict, List
 
-
 # fmt: off
 def filter_by_state(input_list_dict: List[Dict[str, Any]],
                     state: str = "EXECUTED"
